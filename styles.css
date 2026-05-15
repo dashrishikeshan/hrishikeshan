@@ -186,7 +186,7 @@ a {
 .hero {
   min-height: calc(100vh - 72px);
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.92fr);
   align-items: center;
   gap: clamp(28px, 5vw, 64px);
   padding: 68px 0 84px;
@@ -320,9 +320,22 @@ h3 {
 .hero-panel {
   position: relative;
   overflow: hidden;
-  padding: clamp(20px, 3vw, 30px);
+  padding: clamp(14px, 2vw, 18px);
   transform-style: preserve-3d;
   animation: cardFloat 6.4s ease-in-out infinite, heroRise 850ms 130ms ease both;
+}
+
+.hero-portrait-card {
+  isolation: isolate;
+  align-self: stretch;
+  min-height: 650px;
+  display: grid;
+  align-content: end;
+  background:
+    radial-gradient(circle at 62% 18%, rgba(72, 244, 255, 0.2), transparent 28%),
+    radial-gradient(circle at 22% 72%, rgba(255, 79, 216, 0.16), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035)),
+    var(--panel);
 }
 
 .hero-panel::before,
@@ -340,8 +353,8 @@ h3 {
 
 .panel-orbit {
   position: absolute;
-  right: -74px;
-  top: -74px;
+  right: -54px;
+  top: -54px;
   width: 180px;
   height: 180px;
   border: 1px solid rgba(72, 244, 255, 0.18);
@@ -362,6 +375,62 @@ h3 {
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 18px rgba(156, 255, 106, 0.9);
+}
+
+.portrait-frame {
+  position: absolute;
+  inset: 12px;
+  z-index: -1;
+  margin: 0;
+  overflow: hidden;
+  border-radius: calc(var(--radius) - 2px);
+  background: #0b1018;
+}
+
+.portrait-frame::before,
+.portrait-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.portrait-frame::before {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(7, 9, 15, 0.02) 0%, rgba(7, 9, 15, 0.2) 54%, rgba(7, 9, 15, 0.82) 100%),
+    linear-gradient(90deg, rgba(72, 244, 255, 0.18), transparent 24%, transparent 72%, rgba(255, 79, 216, 0.15));
+  mix-blend-mode: screen;
+}
+
+.portrait-frame::after {
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 60px rgba(7, 9, 15, 0.72), inset 0 0 28px rgba(72, 244, 255, 0.14);
+}
+
+.portrait-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 56% 50%;
+  filter: saturate(0.92) contrast(1.06) brightness(0.92);
+  transform: scale(1.025);
+}
+
+.hero-status-card {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  border: 1px solid rgba(72, 244, 255, 0.2);
+  border-radius: var(--radius);
+  padding: 16px;
+  background:
+    linear-gradient(145deg, rgba(7, 9, 15, 0.74), rgba(12, 18, 29, 0.52)),
+    rgba(7, 9, 15, 0.62);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42), inset 0 0 28px rgba(72, 244, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(1.35);
 }
 
 .status-line {
@@ -439,6 +508,27 @@ h3 {
   color: var(--muted);
   font-size: 0.9rem;
   font-weight: 700;
+}
+
+.compact-metrics {
+  gap: 8px;
+}
+
+.compact-metrics div {
+  min-height: 92px;
+  padding: 13px;
+  background:
+    linear-gradient(135deg, rgba(72, 244, 255, 0.1), rgba(156, 255, 106, 0.04)),
+    rgba(255, 255, 255, 0.04);
+}
+
+.compact-metrics strong {
+  font-size: 2.1rem;
+}
+
+.compact-metrics span {
+  margin-top: 5px;
+  font-size: 0.78rem;
 }
 
 .split-section,
@@ -735,7 +825,7 @@ li + li {
   }
 
   .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.78fr);
+    grid-template-columns: minmax(0, 1fr) minmax(330px, 0.86fr);
   }
 
   .metrics-grid strong {
@@ -787,6 +877,10 @@ li + li {
   .hero {
     min-height: auto;
     padding: 46px 0 58px;
+  }
+
+  .hero-portrait-card {
+    min-height: 640px;
   }
 
   .capability-grid,
@@ -907,6 +1001,19 @@ li + li {
     animation: heroRise 850ms 130ms ease both;
   }
 
+  .hero-portrait-card {
+    min-height: 560px;
+    padding: 14px;
+  }
+
+  .portrait-frame {
+    inset: 8px;
+  }
+
+  .portrait-frame img {
+    object-position: 58% 50%;
+  }
+
   .panel-orbit {
     right: -92px;
     top: -92px;
@@ -932,8 +1039,17 @@ li + li {
     padding: 14px;
   }
 
+  .compact-metrics div {
+    min-height: 86px;
+    padding: 12px;
+  }
+
   .metrics-grid strong {
     font-size: 2.45rem;
+  }
+
+  .compact-metrics strong {
+    font-size: 2rem;
   }
 
   .metrics-grid span {
@@ -1038,6 +1154,14 @@ li + li {
 
   .metrics-grid div {
     min-height: 94px;
+  }
+
+  .hero-portrait-card {
+    min-height: 520px;
+  }
+
+  .portrait-frame img {
+    object-position: 61% 50%;
   }
 
   .button {
