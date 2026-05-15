@@ -328,7 +328,7 @@ h3 {
 .hero-portrait-card {
   isolation: isolate;
   align-self: stretch;
-  min-height: 650px;
+  min-height: clamp(600px, 76vh, 720px);
   display: grid;
   align-content: end;
   background:
@@ -415,7 +415,7 @@ h3 {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: 56% 50%;
+  object-position: 56% center;
   filter: saturate(0.92) contrast(1.06) brightness(0.92);
   transform: scale(1.025);
 }
@@ -814,6 +814,10 @@ li + li {
   .section-shell {
     width: min(1180px, calc(100% - (var(--page-gutter) * 2)));
   }
+
+  .hero {
+    grid-template-columns: minmax(0, 0.88fr) minmax(420px, 0.9fr);
+  }
 }
 
 @media (max-width: 1080px) {
@@ -827,6 +831,10 @@ li + li {
 
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(330px, 0.86fr);
+  }
+
+  .hero-portrait-card {
+    min-height: clamp(560px, 68vh, 660px);
   }
 
   .metrics-grid strong {
@@ -881,7 +889,9 @@ li + li {
   }
 
   .hero-portrait-card {
+    width: min(100%, 620px);
     min-height: 640px;
+    justify-self: center;
   }
 
   .capability-grid,
@@ -1003,16 +1013,24 @@ li + li {
   }
 
   .hero-portrait-card {
-    min-height: 560px;
+    display: block;
+    min-height: auto;
     padding: 14px;
   }
 
   .portrait-frame {
-    inset: 8px;
+    position: relative;
+    inset: auto;
+    aspect-ratio: 4 / 5;
+    margin-bottom: 12px;
   }
 
   .portrait-frame img {
-    object-position: 58% 50%;
+    object-position: 58% center;
+  }
+
+  .hero-status-card {
+    padding: 14px;
   }
 
   .panel-orbit {
@@ -1041,7 +1059,7 @@ li + li {
   }
 
   .compact-metrics div {
-    min-height: 86px;
+    min-height: 82px;
     padding: 12px;
   }
 
@@ -1153,16 +1171,37 @@ li + li {
     grid-template-columns: 1fr;
   }
 
+  .compact-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .metrics-grid div {
     min-height: 94px;
   }
 
   .hero-portrait-card {
-    min-height: 520px;
+    padding: 10px;
   }
 
   .portrait-frame img {
-    object-position: 61% 50%;
+    object-position: 61% center;
+  }
+
+  .hero-status-card {
+    padding: 12px;
+  }
+
+  .compact-metrics div {
+    min-height: 78px;
+    padding: 10px;
+  }
+
+  .compact-metrics strong {
+    font-size: 1.75rem;
+  }
+
+  .compact-metrics span {
+    font-size: 0.72rem;
   }
 
   .button {
