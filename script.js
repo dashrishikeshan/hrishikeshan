@@ -166,7 +166,7 @@ function setActiveNav() {
     .map((id) => document.getElementById(id))
     .filter(Boolean);
   const links = new Map(
-    Array.from(document.querySelectorAll(".nav-links a")).map((link) => [
+    Array.from(document.querySelectorAll('.nav-links a[href^="#"]')).map((link) => [
       link.getAttribute("href").replace("#", ""),
       link,
     ])
@@ -187,6 +187,18 @@ function setActiveNav() {
   sections.forEach((section) => observer.observe(section));
 }
 
+function setupBackToTop() {
+  const button = document.querySelector(".back-to-top");
+  if (!button) return;
+
+  function syncVisibility() {
+    button.classList.toggle("is-visible", window.scrollY > 460);
+  }
+
+  syncVisibility();
+  window.addEventListener("scroll", syncVisibility, { passive: true });
+}
+
 resizeCanvas();
 setupTickerLoop();
 if (prefersReducedMotion) {
@@ -199,4 +211,5 @@ setupScrollReveal();
 setupCursorGlow();
 setupTiltCards();
 setActiveNav();
+setupBackToTop();
 window.addEventListener("resize", resizeCanvas);
