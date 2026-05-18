@@ -16,6 +16,8 @@
   --radius: 8px;
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
   --page-gutter: 18px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -40,6 +42,16 @@ body {
   letter-spacing: 0;
   line-height: 1.6;
   text-size-adjust: 100%;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 520ms var(--ease-out),
+    transform 520ms var(--ease-out);
+}
+
+body.is-loaded {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 body::before {
@@ -190,6 +202,10 @@ a {
   border-bottom: 1px solid var(--line);
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.26);
   backdrop-filter: blur(22px) saturate(1.4);
+  transition:
+    background 260ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease;
 }
 
 .brand {
@@ -237,19 +253,49 @@ a {
 
 .nav-links a {
   display: inline-flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
 }
 
 .nav-links a {
-  transition: color 180ms ease, text-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+  transition:
+    color 220ms ease,
+    text-shadow 220ms ease,
+    transform 220ms var(--ease-smooth),
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: -7px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  box-shadow: 0 0 12px rgba(72, 244, 255, 0.54);
+  opacity: 0;
+  transition:
+    left 240ms var(--ease-smooth),
+    right 240ms var(--ease-smooth),
+    opacity 180ms ease;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--cyan);
   text-shadow: 0 0 18px rgba(72, 244, 255, 0.58);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  left: 0;
+  right: 0;
+  opacity: 1;
 }
 
 .nav-download {
@@ -406,7 +452,11 @@ h3 {
   font-weight: 800;
   position: relative;
   overflow: hidden;
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  transition:
+    transform 240ms var(--ease-smooth),
+    box-shadow 240ms ease,
+    border-color 240ms ease,
+    filter 240ms ease;
 }
 
 .button::after {
@@ -419,7 +469,8 @@ h3 {
 }
 
 .button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  filter: saturate(1.08);
 }
 
 .button:hover::after {
@@ -693,6 +744,10 @@ h3 {
   padding: 82px 0;
 }
 
+.capabilities-section {
+  padding: 82px 0;
+}
+
 .ticker-section {
   overflow: hidden;
   border: 1px solid rgba(72, 244, 255, 0.14);
@@ -732,7 +787,7 @@ h3 {
 
 .section-heading {
   max-width: 760px;
-  margin-bottom: 28px;
+  margin-bottom: clamp(24px, 4vw, 36px);
 }
 
 .capability-grid,
@@ -749,7 +804,11 @@ h3 {
   overflow: hidden;
   padding: 22px;
   transform-style: preserve-3d;
-  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  transition:
+    transform 280ms var(--ease-smooth),
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    background 240ms ease;
 }
 
 .capability-card::before,
@@ -763,10 +822,34 @@ h3 {
   transition: opacity 200ms ease;
 }
 
+.capability-card::after,
+.process-grid article::after,
+.featured-project::after,
+.portfolio-list a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.16) 42%, transparent 66%);
+  opacity: 0;
+  transform: translateX(-115%);
+  transition:
+    opacity 240ms ease,
+    transform 560ms var(--ease-smooth);
+  pointer-events: none;
+}
+
 .capability-card:hover::before,
 .process-grid article:hover::before,
 .featured-project:hover::before {
   opacity: 1;
+}
+
+.capability-card:hover::after,
+.process-grid article:hover::after,
+.featured-project:hover::after,
+.portfolio-list a:hover::after {
+  opacity: 1;
+  transform: translateX(115%);
 }
 
 .capability-card:hover,
@@ -792,6 +875,11 @@ h3 {
 .featured-project p,
 .site-footer p {
   color: var(--muted);
+}
+
+.capability-card p,
+.process-grid p {
+  line-height: 1.62;
 }
 
 .experience-section,
@@ -847,7 +935,11 @@ li + li {
   background:
     linear-gradient(135deg, rgba(72, 244, 255, 0.12), rgba(156, 255, 106, 0.05)),
     var(--panel-strong);
-  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  transition:
+    transform 280ms var(--ease-smooth),
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    background 240ms ease;
 }
 
 .featured-project h3 {
@@ -860,6 +952,14 @@ li + li {
   margin-top: 18px;
   color: var(--green);
   font-weight: 800;
+  transition:
+    color 220ms ease,
+    text-shadow 220ms ease;
+}
+
+.featured-project a:hover {
+  color: var(--cyan);
+  text-shadow: 0 0 18px rgba(72, 244, 255, 0.48);
 }
 
 .portfolio-list {
@@ -868,19 +968,27 @@ li + li {
 }
 
 .portfolio-list a {
+  position: relative;
   display: flex;
   min-height: 96px;
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+  overflow: hidden;
   color: #f4fbff;
   font-weight: 800;
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 260ms var(--ease-smooth),
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease,
+    color 220ms ease;
 }
 
 .portfolio-list a:hover {
-  transform: translateY(-2px);
+  transform: translateX(8px);
   border-color: rgba(156, 255, 106, 0.5);
+  color: #f7fbff;
 }
 
 .portfolio-list span {
@@ -944,10 +1052,19 @@ li + li {
   transform: translateY(0) scale(1);
 }
 
-.section-heading.reveal,
 .split-section.reveal,
 .credentials-section > div.reveal {
   transform: translateY(26px);
+}
+
+.split-section.reveal.is-visible,
+.credentials-section > div.reveal.is-visible {
+  transform: translateY(0);
+}
+
+.section-heading.reveal,
+.section-heading.reveal.is-visible {
+  transform: none;
 }
 
 .capability-card.reveal,
@@ -973,10 +1090,11 @@ li + li {
 .portfolio-list a,
 .credential-list {
   transition:
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    transform 220ms ease,
-    background 220ms ease;
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    transform 280ms var(--ease-smooth),
+    background 240ms ease,
+    color 220ms ease;
 }
 
 .tilt-card {
@@ -984,7 +1102,7 @@ li + li {
 }
 
 .tilt-card:hover {
-  --lift: -4px;
+  --lift: -6px;
 }
 
 .footer-links {
@@ -1177,6 +1295,7 @@ li + li {
   }
 
   .split-section,
+  .capabilities-section,
   .experience-section,
   .erp-section,
   .projects-section,
