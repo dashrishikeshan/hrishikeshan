@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="HD">
+  <defs>
+    <linearGradient id="mark" x1="8" y1="10" x2="58" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#48f4ff"/>
+      <stop offset="1" stop-color="#9cff6a"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#07090f"/>
+  <rect x="7" y="7" width="50" height="50" rx="11" fill="#0d1b24" stroke="url(#mark)" stroke-width="2"/>
+  <text x="32" y="39" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="800" fill="url(#mark)" filter="url(#glow)">HD</text>
+</svg>

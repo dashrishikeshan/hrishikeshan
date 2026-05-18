@@ -5,6 +5,23 @@ let width = 0;
 let height = 0;
 let points = [];
 
+document.body.classList.add("is-loading");
+
+function setupPageLoader() {
+  const finishLoading = () => {
+    window.setTimeout(() => {
+      document.body.classList.remove("is-loading");
+      document.body.classList.add("is-loaded");
+    }, prefersReducedMotion ? 0 : 450);
+  };
+
+  if (document.readyState === "complete") {
+    finishLoading();
+  } else {
+    window.addEventListener("load", finishLoading, { once: true });
+  }
+}
+
 function resizeCanvas() {
   const ratio = window.devicePixelRatio || 1;
   width = window.innerWidth;
@@ -102,10 +119,15 @@ function setupTickerLoop() {
 
 function setupScrollReveal() {
   const revealTargets = document.querySelectorAll(
-    ".split-section, .section-heading, .capability-card, .timeline-card, .process-grid article, .featured-project, .portfolio-list a, .credentials-section > div, .site-footer"
+    ".ticker-section, .split-section, .section-heading, .capability-card, .timeline-card, .process-grid article, .featured-project, .portfolio-list a, .credentials-section > div, .site-footer"
   );
 
-  revealTargets.forEach((target) => target.classList.add("reveal"));
+  revealTargets.forEach((target, index) => {
+    const groupIndex = Array.from(target.parentElement?.children || []).indexOf(target);
+    const stagger = Math.max(groupIndex, 0) % 6;
+    target.classList.add("reveal");
+    target.style.setProperty("--reveal-delay", `${Math.min(stagger * 75 + (index % 2) * 20, 380)}ms`);
+  });
 
   if (prefersReducedMotion) {
     revealTargets.forEach((target) => target.classList.add("is-visible"));
@@ -199,6 +221,7 @@ function setupBackToTop() {
   window.addEventListener("scroll", syncVisibility, { passive: true });
 }
 
+setupPageLoader();
 resizeCanvas();
 setupTickerLoop();
 if (prefersReducedMotion) {

@@ -14,9 +14,17 @@
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="shortcut icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="page-loader" aria-label="Loading page" role="status">
+      <div class="loader-mark" aria-hidden="true">
+        <span>HD</span>
+      </div>
+    </div>
+
     <canvas id="signalCanvas" aria-hidden="true"></canvas>
     <div class="cursor-glow" aria-hidden="true"></div>
     <div class="ambient ambient-one" aria-hidden="true"></div>
@@ -41,28 +49,18 @@
     <main id="top">
       <section class="hero section-shell">
         <div class="hero-content">
-<<<<<<< HEAD
-          <p class="eyebrow code-transition" style="--code-delay: 80ms">
-            <span class="code-prompt" aria-hidden="true">&gt;</span>
-            <span>Junior Developer / DevOps-Oriented IT Professional</span>
+          <p class="eyebrow hero-reveal" style="--reveal-delay: 80ms; --write-steps: 35">
+            <span>DevOps-Oriented IT Professional</span>
           </p>
-          <h1 class="hero-name code-transition" style="--code-delay: 230ms">
+          <h1 class="hero-name hero-reveal" style="--reveal-delay: 220ms; --write-steps: 16">
             <span>Hrishikeshan Das</span>
           </h1>
-          <p class="hero-copy code-transition" style="--code-delay: 430ms">
+          <p class="hero-copy hero-reveal" style="--reveal-delay: 430ms; --write-steps: 88">
             <span>
               Practical developer with experience across web and mobile application development,
               hosting, networking, manufacturing ERP workflows, and integrated business systems.
               Open to relocation to Finland and other European opportunities.
             </span>
-=======
-          <p class="eyebrow">DevOps-Oriented IT Professional</p>
-          <h2 class="hero-name">Hrishikeshan Das</h2>
-          <p class="hero-copy">
-            Practical developer with experience across web and mobile application development,
-            hosting, networking, manufacturing ERP workflows, and integrated business systems.
-            Open to relocation to Finland and other European opportunities.
->>>>>>> fa72bdaded078318474d74464ea2b6410d205769
           </p>
           <div class="hero-actions" aria-label="Contact actions">
             <a class="button button-primary" href="mailto:contact@hrishikeshandas.online">Email Me</a>
