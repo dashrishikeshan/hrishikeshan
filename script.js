@@ -15,11 +15,16 @@ const rand = (lo, hi) => lo + Math.random() * (hi - lo);
 document.body.classList.add("is-loading");
 
 function setupPageLoader() {
+  const startTime = performance.now();
+  
   const finishLoading = () => {
+    const elapsed = performance.now() - startTime;
+    const remaining = Math.max(0, 2500 - elapsed);
+    
     window.setTimeout(() => {
       document.body.classList.remove("is-loading");
       document.body.classList.add("is-loaded");
-    }, prefersReducedMotion ? 0 : 450);
+    }, prefersReducedMotion ? 0 : remaining);
   };
 
   if (document.readyState === "complete") {
@@ -410,6 +415,27 @@ function setupBackToTop() {
   window.addEventListener("scroll", syncVisibility, { passive: true });
 }
 
+/* ── Mobile Menu Toggle ──────────────────────────────── */
+function setupMobileMenu() {
+  const toggleBtn = document.querySelector('.mobile-menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (!toggleBtn || !navLinks) return;
+
+  toggleBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+
+  // Close menu when clicking a link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 860) {
+        navLinks.classList.remove('active');
+      }
+    });
+  });
+}
+
 /* ── Initialise ──────────────────────────────────────── */
 setupPageLoader();
 resizeAurora();
@@ -430,6 +456,7 @@ setupCursorGlow();
 setupTiltCards();
 setActiveNav();
 setupBackToTop();
+setupMobileMenu();
 
 window.addEventListener("resize", () => {
   resizeAurora();
